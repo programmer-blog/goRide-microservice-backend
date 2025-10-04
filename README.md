@@ -1,7 +1,7 @@
 # GoRide Microservices Project
 
 GoRide is a microservices-based backend for a modern ride-hailing platform.  
-It provides services for logging and retrieving rider coordinates, managing rider profiles, 
+It provides services for logging and retrieving rider coordinates, managing rider profiles,
 and includes a local development environment powered by Docker Compose.  
 Future plans include PostgreSQL integration for the Rider Service and authentication for secure access.
 
@@ -60,7 +60,7 @@ Future plans include PostgreSQL integration for the Rider Service and authentica
 ├── rest.http
 └── README.md
 
-````
+```
 
 ---
 
@@ -78,7 +78,6 @@ Future plans include PostgreSQL integration for the Rider Service and authentica
 ## Environment Variables (.env at repository root)
 
 Create a `.env` file in the **repo root**:
-
 ```
 
 # .env
@@ -88,6 +87,7 @@ RABBITMQ_URL=amqp://user:password@localhost:5672
 RABBITMQ_QUEUE=rider_queue
 
 ```
+
 ```
 
 ## 🐳 Running with Docker
@@ -96,18 +96,17 @@ Start the required services:
 
 ```bash
 docker-compose up -d
-````
+```
 
 This launches:
 
-* **MongoDB** at `mongodb://localhost:27017`
+- **MongoDB** at `mongodb://localhost:27017`
+  - Username: `root`
+  - Password: `root`
 
-  * Username: `root`
-  * Password: `root`
-* **RabbitMQ** at `amqp://localhost:5672` with UI at [http://localhost:15672](http://localhost:15672)
-
-  * Username: `user`
-  * Password: `password`
+- **RabbitMQ** at `amqp://localhost:5672` with UI at [http://localhost:15672](http://localhost:15672)
+  - Username: `user`
+  - Password: `password`
 
 ---
 
@@ -167,10 +166,9 @@ Content-Type: application/json
 
 ## 🔗 Microservice Communication
 
-* **Logging Service → Rider Service**
-
-  * Uses NestJS `ClientProxy` with TCP transport
-  * Sends `{ cmd: 'get-rider-details' }` to Rider Service to fetch rider profile
+- **Logging Service → Rider Service**
+  - Uses NestJS `ClientProxy` with TCP transport
+  - Sends `{ cmd: 'get-rider-details' }` to Rider Service to fetch rider profile
 
 ---
 
@@ -203,11 +201,12 @@ npm run test:e2e
 
 ## 📦 Future Improvements
 
-* Connect Rider Service to a persistent database
-* Add authentication and authorization
-* Implement better logging and error handling
-* Add CI/CD pipeline for deployments
-* Include integration tests for inter-service communication
+- Connect Rider Service to a persistent database
+- Add authentication and authorization
+- Implement better logging and error handling
+- Add CI/CD pipeline for deployments
+- Include integration tests for inter-service communication
 
 ```
+
 ```

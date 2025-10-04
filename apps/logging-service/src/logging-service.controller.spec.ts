@@ -11,7 +11,9 @@ describe('LoggingServiceController', () => {
       providers: [LoggingServiceService],
     }).compile();
 
-    loggingServiceController = app.get<LoggingServiceController>(LoggingServiceController);
+    loggingServiceController = app.get<LoggingServiceController>(
+      LoggingServiceController,
+    );
   });
 
   describe('root', () => {
