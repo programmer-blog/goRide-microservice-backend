@@ -1,5 +1,4 @@
-version: "3.1"
-
+version: '3.8'
 services:
   mongo:
     image: mongo
@@ -11,6 +10,17 @@ services:
       - 27017:27017
     volumes:
       - mongo-data:/data/db
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: riders_db
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -21,6 +31,9 @@ services:
     ports:
       - 5672:5672
       - 15672:15672
-
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
 volumes:
   mongo-data:
+  postgres_data:
+  rabbitmq_data:
