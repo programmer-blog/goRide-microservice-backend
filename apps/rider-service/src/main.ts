@@ -6,12 +6,18 @@ async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
     RiderServiceModule,
     {
-      transport: Transport.TCP,
-      options: { host: '0.0.0.0', port: 3001 },
+      transport: Transport.RMQ,
+      options: {
+        urls: [
+          process.env.RABBITMQ_URL ?? 'amqp://user:password@localhost:5672',
+        ],
+        queue: process.env.RABBITMQ_QUEUE ?? 'rider_queue',
+        queueOptions: {
+          durable: false,
+        },
+      },
     },
   );
-  console.log('[RIDER] starting microservice on tcp://0.0.0.0:3001');
   await app.listen();
-  console.log('[RIDER] microservice is listening');
 }
 bootstrap();
