@@ -74,6 +74,22 @@ Future plans include PostgreSQL integration for the Rider Service and authentica
 
 ---
 
+```markdown
+## Environment Variables (.env at repository root)
+
+Create a `.env` file in the **repo root**:
+
+```
+
+# .env
+
+MONGO_URI=mongodb://root:root@localhost:27017/logging-db?authSource=admin
+RABBITMQ_URL=amqp://user:password@localhost:5672
+RABBITMQ_QUEUE=rider_queue
+
+```
+```
+
 ## 🐳 Running with Docker
 
 Start the required services:
