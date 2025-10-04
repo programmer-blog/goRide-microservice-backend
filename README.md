@@ -1,8 +1,9 @@
-```markdown
-# Uber-like Microservices Project
+# GoRide Microservices Project
 
-This project is a microservices-based backend for an Uber-like application.  
-It provides services for logging rider coordinates, retrieving rider details, and includes a local development setup using Docker Compose.
+GoRide is a microservices-based backend for a modern ride-hailing platform.  
+It provides services for logging and retrieving rider coordinates, managing rider profiles, 
+and includes a local development environment powered by Docker Compose.  
+Future plans include PostgreSQL integration for the Rider Service and authentication for secure access.
 
 ---
 
