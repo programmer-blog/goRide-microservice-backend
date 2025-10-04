@@ -1,4 +1,3 @@
-```markdown
 # Uber-like Microservices Project
 
 This project is a microservices-based backend for an Uber-like application.  
