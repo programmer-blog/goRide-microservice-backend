@@ -1,4 +1,11 @@
-import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  Logger,
+  OnModuleInit,
+  ServiceUnavailableException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { RiderCoordinate } from './schemas/rider-coordinates.schema';
 import { Model } from 'mongoose';
@@ -12,6 +19,7 @@ export class RiderCoordinatesService implements OnModuleInit {
     private readonly riderCoordinateModel: Model<RiderCoordinate>,
     @Inject('RIDER_SERVICE') private client: ClientProxy,
   ) {}
+  private readonly logger = new Logger(RiderCoordinatesService.name);
 
   async onModuleInit() {
     // Optional but recommended to avoid transient “Connection closed” on first call
@@ -19,25 +27,28 @@ export class RiderCoordinatesService implements OnModuleInit {
   }
 
   async getCoordinates(rider: string | { rider?: string; id?: string }) {
-    // normalize
     const riderId =
       typeof rider === 'string' ? rider : (rider?.rider ?? rider?.id);
-    if (!riderId) throw new Error('rider id is required');
+    if (!riderId) throw new BadRequestException('rider id is required');
 
-    // ✅ use riderId (string) in the query
     const coordinates = await this.riderCoordinateModel
       .find({ rider: riderId })
       .lean()
       .exec();
 
-    // ✅ send a STRING payload (make handler expect string)
-    const riderDetails = await firstValueFrom(
-      this.client
-        .send({ cmd: 'get-rider-details' }, riderId)
-        .pipe(timeout(5000)),
-    );
-
-    return { coordinates, riderDetails };
+    try {
+      const riderDetails = await firstValueFrom(
+        this.client
+          .send({ cmd: 'get-rider-details' }, riderId)
+          .pipe(timeout(5000)),
+      );
+      return { coordinates, riderDetails };
+    } catch (err) {
+      this.logger.error(`RMQ request failed for rider ${riderId}`, err);
+      throw new ServiceUnavailableException(
+        'Rider Service unavailable or timed out',
+      );
+    }
   }
 
   async saveCoordinates(createCoordinateDTO: any) {

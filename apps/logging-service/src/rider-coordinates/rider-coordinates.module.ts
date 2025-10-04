@@ -21,10 +21,13 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     ClientsModule.register([
       {
         name: 'RIDER_SERVICE',
-        transport: Transport.TCP,
+        transport: Transport.RMQ,
         options: {
-          host: '127.0.0.1', // if both processes run on the same host (not Docker)
-          port: 3001, // must match rider microservice
+          urls: [
+            process.env.RABBITMQ_URL ?? 'amqp://user:password@localhost:5672',
+          ],
+          queue: process.env.RABBITMQ_QUEUE ?? 'rider_queue',
+          queueOptions: { durable: false },
         },
       },
     ]),
