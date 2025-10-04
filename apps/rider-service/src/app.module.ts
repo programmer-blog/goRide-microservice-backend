@@ -10,7 +10,7 @@ import { RiderServiceModule } from './rider-service.module';
       port: 5432,
       username: 'postgres',
       password: 'root',
-      database: 'uber',
+      database: 'riders_db',
       autoLoadEntities: true,
       synchronize: true,
       logging: true,
