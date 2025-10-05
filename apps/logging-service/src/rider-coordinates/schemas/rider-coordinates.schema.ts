@@ -6,7 +6,7 @@ export type RiderCoordinatesDocument = HydratedDocument<RiderCoordinate>;
 @Schema({ timestamps: true })
 export class RiderCoordinate {
   @Prop({ required: true })
-  rider: string;
+  rider: number;
   @Prop({ required: true })
   lat: number;
   @Prop({ required: true })

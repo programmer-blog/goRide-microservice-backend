@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber } from 'class-validator';
 
 export class CreateCoordinatesDTO {
   @IsNumber()
@@ -9,7 +9,7 @@ export class CreateCoordinatesDTO {
   @IsNotEmpty()
   lat: number;
 
-  @IsString()
+  @IsNumber()
   @IsNotEmpty()
-  rider: string;
+  rider: number;
 }
